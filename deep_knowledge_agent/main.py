@@ -8,7 +8,7 @@ import sys
 import traceback
 from pathlib import Path
 from textwrap import dedent
-from typing import Any, Optional
+from typing import Any
 
 from agno.agent import Agent
 from agno.db.sqlite import SqliteDb
