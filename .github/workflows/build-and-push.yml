@@ -131,7 +131,7 @@ jobs:
                 "build_number": $build_number
               },
               "metadata": {
-                "documentation_url": "https://Paraschamoli.github.io/deep-knowledge-agent/",
+                "documentation_url": "https://github.com/Paraschamoli/deep-knowledge-agent#readme",
                 "domain": "knowledge-research",
                 "specialization": "deep-knowledge-analysis",
                 "last_updated": $last_updated
