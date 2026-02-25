@@ -55,6 +55,7 @@ requirements:
     - "sqlalchemy"
     - "mem0ai"
     - "openai"
+    - "bindu"
   system:
     - "Python 3.12+"
   min_memory_mb: 512
