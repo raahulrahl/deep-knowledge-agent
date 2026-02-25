@@ -22,6 +22,16 @@
 
 ---
 
+## Skills
+The agent includes the `deep-knowledge` skill for comprehensive research capabilities:
+- **Primary Capability**: Deep research and knowledge synthesis using iterative search and validation
+- **Features**: Query decomposition into sub-topics, multi-source information aggregation, fact validation and cross-referencing, structured output generation
+- **Limitations**: Requires reliable knowledge sources; processing time depends on query complexity
+
+- **Secondary Capability**: Enhanced source integration and real-time updates (planned for v2.0.0)
+
+---
+
 ## 🎯 What is Deep Knowledge Agent?
 
 An AI-powered research assistant designed for deep, comprehensive analysis of complex topics. Think of it as having an expert researcher available 24/7 who doesn't just find answers, but understands them from multiple perspectives and synthesizes them into coherent, well-reasoned insights.
@@ -129,19 +139,37 @@ Default port: `3773` (can be changed in `agent_config.json`)
 
 ## 💡 Usage Examples
 
-### Via HTTP API
+### Via JSON-RPC API
 
 ```bash
-curl -X POST http://localhost:3773/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "messages": [
-      {
-        "role": "user",
-        "content": "Research the impact of quantum computing on modern cryptography. Analyze potential threats to current encryption standards and explore post-quantum cryptography solutions."
-      }
-    ]
-  }'
+curl --location 'http://localhost:3773' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer sk-or-v1-...' \
+--data '{
+  "jsonrpc": "2.0",
+  "method": "message/send",
+  "params": {
+    "message": {
+      "role": "user",
+      "parts": [
+        {
+          "kind": "text",
+          "text": "Conduct a deep analysis of the competitive landscape for Notion, comparing it with ClickUp and Asana. Break the analysis into sub-topics including product capabilities, target market segments, pricing models, strengths, weaknesses, ecosystem integration, and long-term strategic positioning. Provide a structured and well-reasoned synthesis."
+        }
+      ],
+      "kind": "message",
+      "messageId": "770e8400-e29b-41d4-a716-446655440201",
+      "contextId": "770e8400-e29b-41d4-a716-446655440202",
+      "taskId": "770e8400-e29b-41d4-a716-446655440280"
+    },
+    "configuration": {
+      "acceptedOutputModes": [
+        "application/json"
+      ]
+    }
+  },
+  "id": "770e8400-e29b-41d4-a716-446655440204"
+}'
 ```
 
 ### Sample Research Queries
