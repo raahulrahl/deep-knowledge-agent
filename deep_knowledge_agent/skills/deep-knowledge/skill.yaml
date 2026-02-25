@@ -5,22 +5,15 @@ author: paras25619@gmail.com
 
 # Description
 description: |
-  Deep Knowledge Agent is an advanced AI research assistant designed for in-depth analysis,
-  knowledge synthesis, and comprehensive research on complex topics. It breaks down queries
-  into sub-topics, validates facts, connects insights across domains, and delivers structured,
-  well-reasoned outputs. This skill enables deep research, technical exploration, and
-  knowledge synthesis rather than providing surface-level answers.
+  Agent for deep research and knowledge synthesis.
+  Performs iterative searches, fact validation, and structured analysis on complex topics.
 
 # Tags and Modes
 tags:
-  - research
   - deep-knowledge
+  - research
   - knowledge-synthesis
-  - investigative-analysis
   - fact-validation
-  - domain-exploration
-  - technical-research
-  - comprehensive-analysis
 
 input_modes:
   - text/plain
@@ -29,309 +22,284 @@ input_modes:
 output_modes:
   - text/plain
   - application/json
-  - text/markdown
 
 # Example Queries
 examples:
+  - "Conduct a deep analysis of the competitive landscape for Notion, comparing it with ClickUp and Asana. Break the analysis into sub-topics including product capabilities, target market segments, pricing models, strengths, weaknesses, ecosystem integration, and long-term strategic positioning. Provide a structured and well-reasoned synthesis."
   - "Research the impact of quantum computing on modern cryptography and analyze potential future threats to current encryption standards"
-  - "Perform deep analysis on the ethical implications of AI in healthcare decision-making systems"
   - "Investigate the relationship between climate change policies and economic growth in developing nations over the past decade"
-  - "Analyze the evolution of renewable energy technologies and their integration into national power grids"
-  - "Explore the intersection of neuroscience and artificial intelligence in understanding human cognition"
 
 # Detailed Capabilities
 capabilities_detail:
-  deep_research_analysis:
+  primary_capability:
     supported: true
-    description: "Comprehensive topic analysis with iterative search and validation"
+    description: "Deep research and knowledge synthesis using iterative search and validation"
     features:
       - "Query decomposition into sub-topics"
       - "Multi-source information aggregation"
       - "Fact validation and cross-referencing"
-      - "Domain insight connection"
       - "Structured output generation"
-    limitations: "Requires reliable knowledge sources; may be slower for simple queries"
+    limitations: "Requires reliable knowledge sources; processing time depends on query complexity"
 
-  knowledge_synthesis:
-    supported: true
-    description: "Synthesizing information from multiple domains into coherent insights"
-    features:
-      - "Cross-domain knowledge integration"
-      - "Pattern recognition across sources"
-      - "Trend identification and analysis"
-      - "Expert insight extraction"
-    limitations: "Dependent on quality and diversity of input sources"
-
-  iterative_learning:
-    supported: true
-    description: "Progressively deepening understanding through multiple search passes"
-    features:
-      - "Multi-stage research process"
-      - "Gap identification and filling"
-      - "Reasoning chain documentation"
-      - "Confidence level assessment"
-    limitations: "Increased processing time for complex topics"
+  secondary_capability:
+    supported: false
+    planned_version: "2.0.0"
+    description: "Real-time source updates and collaborative research features"
 
 # Requirements
 requirements:
   packages:
-    - "agno>=2.2.0"
-    - "lancedb>=0.8.0"
-    - "tantivy>=0.22.0"
-    - "sqlalchemy>=2.0.45"
-    - "mem0ai>=1.0.1"
-    - "openai>=2.11.0"
+    - "agno"
+    - "lancedb"
+    - "tantivy"
+    - "sqlalchemy"
+    - "mem0ai"
+    - "openai"
   system:
     - "Python 3.12+"
   min_memory_mb: 512
-  external_services:
-    - "OpenRouter API for LLM access"
-    - "Mem0 AI for memory operations"
 
 # Performance Metrics
 performance:
   avg_processing_time_ms: 5000
   max_concurrent_requests: 5
   memory_per_request_mb: 512
-  timeout_seconds: 120
-  max_iterations_per_query: 10
   scalability: horizontal
 
 # Tool Restrictions
 allowed_tools:
   - KnowledgeBaseSearch
   - MemoryOperations
-  - FactValidation
-  - SourceAnalysis
-  - ContentSynthesis
   - Research
 
 # Rich Documentation
 documentation:
   overview: |
-    The Deep Knowledge Agent specializes in thorough, well-researched analysis of complex topics.
-    Unlike surface-level assistants, it performs iterative searches, breaks down queries into
-    manageable components, validates information across multiple sources, and synthesizes
-    comprehensive answers with proper citations. It's designed for users who need in-depth
-    understanding rather than quick answers, making it ideal for research, technical analysis,
-    and knowledge exploration tasks.
+    Deep Knowledge Agent performs thorough analysis of complex topics using iterative knowledge base searches.
+    Uses Agno framework with LanceDB vector database, Mem0 for memory, and OpenRouter models.
 
   use_cases:
     when_to_use:
       - "Complex research requiring multiple perspectives"
       - "Technical topics needing thorough exploration"
       - "Fact-checking and validation of claims"
-      - "Domain exploration and knowledge synthesis"
-      - "Academic or professional research support"
-      - "Decision-making requiring comprehensive analysis"
 
     when_not_to_use:
-      - "Simple factual questions (use general assistant)"
-      - "Real-time information requests (use news/search agent)"
-      - "Mathematical calculations (use calculator agent)"
-      - "Code generation or debugging (use programming agent)"
-      - "Personal advice or opinion-based responses"
+      - "Simple factual questions"
+      - "Real-time information requests"
+      - "Mathematical calculations"
 
   input_structure: |
-    Accepts research queries with optional parameters:
+    JSON-RPC 2.0 message with user query in parts array.
 
-    Text format:
-    "Research query with optional depth specification"
-
-    JSON format:
+    Example:
     {
-      "query": "Research topic or question",
-      "depth": "quick|standard|deep|exhaustive",
-      "focus_areas": ["domain1", "domain2"],
-      "exclude_sources": ["domain_to_exclude"],
-      "max_iterations": 5,
-      "output_format": "structured|narrative|both"
+      "jsonrpc": "2.0",
+      "method": "message/send",
+      "params": {
+        "message": {
+          "role": "user",
+          "parts": [
+            {
+              "kind": "text",
+              "text": "Conduct a deep analysis of the competitive landscape for Notion, comparing it with ClickUp and Asana. Break the analysis into sub-topics including product capabilities, target market segments, pricing models, strengths, weaknesses, ecosystem integration, and long-term strategic positioning. Provide a structured and well-reasoned synthesis."
+            }
+          ],
+          "kind": "message",
+          "messageId": "770e8400-e29b-41d4-a716-446655440201",
+          "contextId": "770e8400-e29b-41d4-a716-446655440202",
+          "taskId": "770e8400-e29b-41d4-a716-446655440280"
+        },
+        "configuration": {
+          "acceptedOutputModes": [
+            "application/json"
+          ]
+        }
+      },
+      "id": "770e8400-e29b-41d4-a716-446655440204"
     }
-
-    Constraints:
-    - Max query length: 1000 characters
-    - Max iterations: 10
-    - Timeout: 120 seconds
-    - Language: English (primary), limited multilingual support
 
   output_format: |
-    Standard Research Output:
+    JSON-RPC 2.0 result with task history and artifacts containing structured analysis.
 
+    Success Response:
     {
-      "success": true,
-      "research": {
-        "title": "Generated research title",
-        "executive_summary": "Brief overview of findings...",
-        "key_findings": [
+      "jsonrpc": "2.0",
+      "id": "770e8400-e29b-41d4-a716-446655440205",
+      "result": {
+        "id": "770e8400-e29b-41d4-a716-446655440280",
+        "context_id": "770e8400-e29b-41d4-a716-446655440202",
+        "kind": "task",
+        "status": {
+          "state": "completed",
+          "timestamp": "2026-02-25T15:44:42.420802+00:00"
+        },
+        "history": [
           {
-            "finding": "Main finding 1",
-            "supporting_evidence": ["Source 1", "Source 2"],
-            "confidence": 0.95,
-            "relevance": "high"
+            "message_id": "770e8400-e29b-41d4-a716-446655440201",
+            "context_id": "770e8400-e29b-41d4-a716-446655440202",
+            "task_id": "770e8400-e29b-41d4-a716-446655440280",
+            "kind": "message",
+            "parts": [
+              {
+                "kind": "text",
+                "text": "Conduct a deep analysis of the competitive landscape for Notion, comparing it with ClickUp and Asana. Break the analysis into sub-topics including product capabilities, target market segments, pricing models, strengths, weaknesses, ecosystem integration, and long-term strategic positioning. Provide a structured and well-reasoned synthesis."
+              }
+            ],
+            "role": "user"
+          },
+          {
+            "role": "assistant",
+            "parts": [
+              {
+                "kind": "text",
+                "text": "To conduct a comprehensive analysis of the competitive landscape for Notion in comparison with ClickUp and Asana..."
+              }
+            ],
+            "kind": "message",
+            "message_id": "5eab7a4b-eccf-4109-a850-e05e35ab247a",
+            "task_id": "770e8400-e29b-41d4-a716-446655440280",
+            "context_id": "770e8400-e29b-41d4-a716-446655440202"
           }
         ],
-        "analysis": "Detailed analysis and insights...",
-        "connections": "Cross-domain connections identified...",
-        "gaps_identified": "Areas requiring further research...",
-        "conclusions": "Synthesized conclusions..."
-      },
-      "methodology": {
-        "iterations_performed": 3,
-        "sources_consulted": 8,
-        "search_terms_used": ["term1", "term2", "term3"],
-        "validation_methods": ["cross-referencing", "source_credibility_check"]
-      },
-      "metadata": {
-        "processing_time_ms": 4500,
-        "confidence_score": 0.88,
-        "depth_level": "deep",
-        "timestamp": "2024-01-01T12:00:00Z"
-      }
-    }
-
-    Error Response:
-    {
-      "success": false,
-      "error": {
-        "code": "RESEARCH_ERROR",
-        "message": "Error description",
-        "suggestions": ["suggestion1", "suggestion2"]
+        "artifacts": [
+          {
+            "artifact_id": "54cab924-c0c4-47f3-9c86-60e20ddcd7df",
+            "name": "result",
+            "parts": [
+              {
+                "kind": "text",
+                "text": "To conduct a comprehensive analysis of the competitive landscape for Notion in comparison with ClickUp and Asana...",
+                "metadata": {
+                  "did.message.signature": "3JCBqAyep5t6sJrWoiHuGdvoxZuuP5nRicqjukyLxsryyDRywDbNqVKcpmbXhL2h4by5t6yo2fRoA4yXSbWtVyRC"
+                }
+              }
+            ]
+          }
+        ]
       }
     }
 
   error_handling:
-    - "No relevant sources found: Returns search strategy attempted and suggestions"
-    - "Conflicting information: Presents all perspectives with confidence scores"
-    - "Timeout: Returns partial results with completion percentage"
-    - "Complex query: Asks for clarification or suggests scoping"
-    - "Resource limits: Queues requests or suggests simplified queries"
-    - "Knowledge gaps: Clearly identifies limitations and suggests further research"
+    - "Incomplete sources: Graceful degradation with partial results"
+    - "Timeout: 120-second limit per operation"
+    - "Invalid queries: Return error message with guidance"
+    - "Rate limits: Automatic retry with exponential backoff"
 
   examples:
-    - title: "Quantum Computing Cryptography Analysis"
+    - title: "Competitive Landscape Analysis"
       input:
-        query: "Research the impact of quantum computing on modern cryptography"
-        depth: "deep"
-        focus_areas: ["cryptography", "quantum_computing", "cybersecurity"]
+        parts:
+          - kind: "text"
+            text: "Conduct a deep analysis of the competitive landscape for Notion, comparing it with ClickUp and Asana. Break the analysis into sub-topics including product capabilities, target market segments, pricing models, strengths, weaknesses, ecosystem integration, and long-term strategic positioning. Provide a structured and well-reasoned synthesis."
       output:
-        success: true
-        research:
-          title: "Quantum Computing's Threat to Modern Cryptographic Standards"
-          executive_summary: "Quantum computing poses significant threats to current encryption methods..."
-          key_findings: [...]
-        methodology:
-          iterations_performed: 4
-          sources_consulted: 12
-        metadata:
-          processing_time_ms: 7800
-          confidence_score: 0.92
+        text: |
+          To conduct a comprehensive analysis of the competitive landscape for Notion in comparison with ClickUp and Asana, I will break down the analysis into several key subtopics as requested:
 
-    - title: "AI Ethics in Healthcare"
-      input:
-        query: "Analyze ethical implications of AI in healthcare decision-making"
-        depth: "standard"
-      output:
-        success: true
-        research:
-          title: "Ethical Considerations in AI-Powered Healthcare Systems"
-          executive_summary: "AI in healthcare presents complex ethical challenges..."
-          key_findings: [...]
-        metadata:
-          processing_time_ms: 5200
-          confidence_score: 0.85
+          1. **Product Capabilities**
+             - **Notion:** Known for its versatility, offering databases, a document editor, task management, and more, dense with customization options.
+             - **ClickUp:** Provides robust task management, document creation, goal setting, and project tracking with advanced features like time tracking.
+             - **Asana:** Specializes in task and project management; offers task detail pages, project timelines, and collaboration tools but less customizable than Notion.
+
+          2. **Target Market Segments**
+             - **Notion:** Appeals to both individuals and teams who need high customization; freelancers, small teams, and creative professionals.
+             - **ClickUp:** Targets teams looking for an all-encompassing project management tool, commonly mid-sized to large businesses.
+             - **Asana:** Appeals largely to mid-sized and larger enterprises that need structured project management and task assignments.
+
+          3. **Pricing Models**
+             - **Notion:** Freemium model with a free tier offering generous features, with paid plans adding increased collaboration and admin controls.
+             - **ClickUp:** Offers a free version with limited storage, and tiered pricing plans that unlock advanced features and integrations.
+             - **Asana:** Starts with a free tier for small teams, scales with paid plans that include additional administrative features, and advanced support.
+
+          4. **Strengths and Weaknesses**
+             - **Notion:**
+               - **Strengths:** High flexibility, deep customization, integrates notes and tasks seamlessly.
+               - **Weaknesses:** Can be overwhelming for new users due to its complexity.
+             - **ClickUp:**
+               - **Strengths:** Comprehensive features, flexibility, strong task management capabilities.
+               - **Weaknesses:** Learning curve due to feature overload, interface can be cluttered.
+             - **Asana:**
+               - **Strengths:** Simple and effective project management, user-friendly interface.
+               - **Weaknesses:** Limited customization, more expensive at higher tiers compared to some competitors.
+
+          5. **Ecosystem Integration**
+             - **Notion:** Provides API access and integrates with tools like Slack, Google Drive, and others through third-party services like Zapier.
+             - **ClickUp:** Integrates with Slack, Google Suite, and many popular services directly for seamless workflow automation.
+             - **Asana:** Offers integrations with a wide range of tools including Salesforce, Microsoft Teams, and others to enhance productivity.
+
+          6. **Long-Term Strategic Positioning**
+             - **Notion:** Focuses on expanding its capabilities as a flexible, all-in-one workspace solution, ideal for creatives and those needing unique workflows.
+             - **ClickUp:** Continuing to develop as a comprehensive productivity platform, appealing to teams looking for extensive features and functionality.
+             - **Asana:** Positioned as a staple in project management for businesses, with a focus on clarity and collaboration efficiency at enterprise levels.
+
+          **Final Synthesis:**
+          The competitive landscape shows that while Notion offers broad flexibility and customization, making it highly attractive to creatives and freelancers, ClickUp provides an expansive suite of tools geared towards detailed project management. Asana, known for its clean, efficient user experience, suits businesses with established project management needs. Each platform has carved out a niche where they excel due to their strengths, pricing, and integration capabilities, while also contending with specific weaknesses that might influence user choice based on needs.
+
+          All analyses were derived with data as of October 2023, cross-referencing product updates and feature releases where applicable. If more in-depth historical comparisons or future projections are needed, further specific queries are advised.
 
   best_practices:
     for_developers:
-      - "Use appropriate depth levels based on query complexity"
-      - "Implement caching for frequent or similar queries"
-      - "Monitor source credibility and diversity"
-      - "Provide clear progress indicators for long-running queries"
-      - "Validate input parameters and provide helpful error messages"
+      - "Use async/await for all agent operations"
+      - "Implement graceful degradation for partial failures"
+      - "Cache API responses to reduce latency"
+      - "Test with various query types and edge cases"
 
     for_orchestrators:
-      - "Route complex, research-intensive queries to this skill"
-      - "Chain with summarization skills for executive briefings"
-      - "Consider query complexity when setting timeouts"
-      - "Use confidence scores for quality assurance"
-      - "Implement fallback to simpler research for time-sensitive queries"
-      - "Monitor resource usage for load balancing"
+      - "Route complex queries to this skill"
+      - "Expect 5-30 second processing time per request"
+      - "Monitor agent response times and API rate limits"
 
   installation: |
+    Install via uv package manager.
+
     Required packages:
-    pip install agno lancedb tantivy sqlalchemy mem0ai openai
+    uv sync
 
     Environment variables:
-    OPENROUTER_API_KEY=your_openrouter_api_key
-    MEM0_API_KEY=your_mem0_api_key
+    OPENROUTER_API_KEY=<your-key>
+    MEM0_API_KEY=<your-key>
 
-    System requirements:
-    # Python 3.12 or higher
-    # Sufficient storage for knowledge base (minimum 1GB)
+    Run:
+    uv run python -m deep_knowledge_agent
 
   versioning:
     - version: "1.0.0"
       date: "2026-01-13"
-      changes: "Initial release with deep research, knowledge synthesis, and iterative learning capabilities"
+      changes: "Initial release with deep research capabilities"
     - version: "1.1.0"
       status: "planned"
-      changes: "Enhanced multilingual support and academic database integration"
-    - version: "1.2.0"
-      status: "planned"
-      changes: "Real-time source updates and collaborative research features"
+      changes: "Enhanced source integration and real-time updates"
 
 # Assessment fields for skill negotiation
 assessment:
   keywords:
-    - "research"
-    - "investigate"
-    - "analyze"
     - "deep"
+    - "research"
+    - "analyze"
     - "knowledge"
     - "synthesis"
+    - "investigate"
     - "comprehensive"
-    - "thorough"
-    - "explore"
-    - "study"
-    - "examine"
-    - "technical"
-    - "academic"
-    - "professional"
 
   specializations:
-    - domain: "technical_research"
+    - domain: "research"
+      confidence_boost: 0.6
+    - domain: "analysis"
       confidence_boost: 0.4
-    - domain: "academic_analysis"
-      confidence_boost: 0.3
-    - domain: "domain_exploration"
-      confidence_boost: 0.3
 
   anti_patterns:
-    - "simple question"
-    - "quick answer"
-    - "real-time"
-    - "live update"
-    - "calculation"
-    - "code"
-    - "opinion"
-    - "personal"
+    - "Simple questions"
+    - "Quick answers"
+    - "Real-time queries"
 
   complexity_indicators:
     simple:
-      - "fact"
-      - "definition"
-      - "quick answer"
-      - "simple explanation"
+      - "Get basic information"
+      - "Simple explanation"
     medium:
-      - "explain"
-      - "describe"
-      - "overview"
-      - "summary"
+      - "Detailed explanation"
+      - "Overview analysis"
     complex:
-      - "research"
-      - "analyze"
-      - "investigate"
-      - "deep dive"
-      - "comprehensive"
-      - "thorough"
-      - "technical analysis"
-      - "domain exploration"
+      - "Deep research"
+      - "Comprehensive analysis"
+      - "Multi-domain synthesis"
