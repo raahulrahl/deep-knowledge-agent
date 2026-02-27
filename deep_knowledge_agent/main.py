@@ -6,6 +6,7 @@ import json
 import os
 import sys
 import traceback
+import warnings
 from pathlib import Path
 from textwrap import dedent
 from typing import Any
@@ -22,6 +23,13 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Suppress OpenAI API key warnings for components that may not use it
+warnings.filterwarnings(
+    "ignore",
+    message="The api_key client option must be set either by passing api_key to the client or by setting the OPENAI_API_KEY environment variable",
+    category=UserWarning,
+)
 
 # Global agent instance
 agent: Agent | None = None

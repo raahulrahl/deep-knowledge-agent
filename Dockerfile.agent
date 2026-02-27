@@ -31,7 +31,7 @@ FROM raahulrahl/bindu-runtime-base:latest
 # OCI labels
 LABEL org.opencontainers.image.title="deep-knowledge-agent"
 LABEL org.opencontainers.image.description="Deep Knowledge Agent is an AI-powered research assistant designed to perform in-depth analysis on complex topics by aggregating information from multiple reliable sources. It breaks down queries into sub-topics, validates facts, connects insights across domains, and delivers structured, well-reasoned outputs—making it ideal for deep research, technical exploration, and knowledge synthesis rather than surface-level answers."
-LABEL org.opencontainers.image.authors="Paras Chamoli <paras25619@gmail.com>"
+LABEL org.opencontainers.image.authors="Paras Chamoli <paras@getbindu.com>"
 LABEL org.opencontainers.image.version="1.0.0"
 LABEL org.opencontainers.image.source="https://github.com/Paraschamoli/deep-knowledge-agent"
 LABEL org.opencontainers.image.licenses="MIT"
